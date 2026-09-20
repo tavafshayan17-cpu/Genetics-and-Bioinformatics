@@ -8,12 +8,12 @@ class DNAVisualizerApp:
         self.sequences = sequences
         self.seq_length = len(sequences[0])
         
-        # تنظیمات ظاهری
-        self.cell_size = 15  # اندازه هر نوکلئوتید
+        #outlook settings
+        self.cell_size = 15  # size of each nucleotide
         self.row_height = 30
         self.margin_left = 80
         
-        # ایجاد کانتینر اصلی و اسکرول‌بار
+        # creating main container and scrollbar
         self.canvas_frame = tk.Frame(root)
         self.canvas_frame.pack(fill=tk.BOTH, expand=True)
 
@@ -21,12 +21,12 @@ class DNAVisualizerApp:
                                  width=self.seq_length * self.cell_size + 100,
                                  height=len(sequences) * self.row_height + 100)
         
-        # ایجاد اسکرول‌بار افقی و عمودی
+        # creating horizental and vertical scrollbar
         self.hbar = tk.Scrollbar(root, orient=tk.HORIZONTAL, command=self.canvas.xview)
         self.vbar = tk.Scrollbar(root, orient=tk.VERTICAL, command=self.canvas.yview)
         self.canvas.configure(xscrollcommand=self.hbar.set, yscrollcommand=self.vbar.set)
 
-        # چیدمان اسکرول‌بارها
+        # scrollbars arrangement
         self.hbar.pack(side=tk.BOTTOM, fill=tk.X)
         self.vbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -36,18 +36,18 @@ class DNAVisualizerApp:
         self.render()
 
     def render(self):
-        # رسم توالی‌ها
+        # drawing sequences
         for row_idx, seq in enumerate(self.sequences):
             current_y = 50 + (row_idx * self.row_height)
             
-            # رسم نام ردیف
+            # draing row name
             self.canvas.create_text(10, current_y, text=f"S{row_idx+1}", 
                                    anchor="e", font=("Arial", 10, "bold"))
 
             for col_idx, base in enumerate(seq):
                 x_pos = self.margin_left + (col_idx * self.cell_size)
                 
-                # منطق ترازسازی (Comparison)
+                # (Comparison)
                 is_conserved = False
                 if row_idx == 0:
                     is_conserved = True
@@ -56,7 +56,7 @@ class DNAVisualizerApp:
                         is_conserved = True
                 
                 if is_conserved:
-                    # رسم مستطیل رنگی به جای قلم (بسیار سریع‌تر و دقیق‌تر)
+                    # drawing colored rectangle instead of pencile (much more faster and precicer)
                     color = self.color_map.get(base.upper(), "grey")
                     self.canvas.create_rectangle(
                         x_pos, current_y - 10, 
@@ -64,15 +64,15 @@ class DNAVisualizerApp:
                         fill=color, outline=""
                     )
                 
-                # اضافه کردن شماره نوکلئوتید در ردیف اول
+                # adding nucleotide numbers in the first row
                 if row_idx == 0 and col_idx % 10 == 0:
                     self.canvas.create_text(x_pos, 20, text=str(col_idx+1), font=("Arial", 8))
 
-        # فعال کردن قابلیت اسکرول
+        # activating scroll ability
         self.canvas.config(scrollregion=self.canvas.bbox("all"))
 
 if __name__ == "__main__":
-    # ۱. ساخت داده‌های حجیم (۵۰۰۰ نوکلئوتید)
+    # 1- creating huge data (5000 nucleotide)
     import random
     print("Generating 5000 nucleotides... please wait.")
     length = 5000
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     
     test_sequences = [seq1, seq2, seq3]
 
-    # ۲. اجرای اپلیکیشن
+    # 2- running application
     root = tk.Tk()
     app = DNAVisualizerApp(root, test_sequences)
     root.mainloop()
