@@ -12,6 +12,7 @@ day1=input('day number:')
 Content_amount=input( 'Please Enter genome amount in grams:')
 half_life=input( 'Please Enter half life of genome content in days:')
 
+#calculating possible distance in number of days
 A=(int(year1)-int(year))-1
 B1=int(A)//4
 B2=((int(A)+1)//4)
@@ -21,6 +22,9 @@ Distance1=((365*int(A))+int(B1))
 Distance2=((365*int(A))+int(B2))
 Distance3=((365*int(A))+int(B3))
 Distance4=((365*int(A))+int(B4))
+
+# Calculating number of days passed in the generation year
+#for the non leap years
 if(int(year)%4==0)and(int(month)==1):
  z=0
 if(int(year)%4==0)and(int(month)==2):
@@ -46,6 +50,7 @@ if(int(year)%4==0)and(int(month)==11):
 if(int(year)%4==0)and(int(month)==12):
  z=30+31+30+31+31+30+31+30+31+29+31
 
+#for the leap years
 if(int(year)%4!=0)and(int(month)==1):
  z=0
 if(int(year)%4!=0)and(int(month)==2):
@@ -72,7 +77,8 @@ if(int(year)%4!=0)and(int(month)==12):
  z=30+31+30+31+31+30+31+30+31+28+31
 
 
-
+#calculating number of days passed in present year
+#for the non leap years
 if(int(year1)%4==0)and(int(month1)==1):
  y=0
 if(int(year1)%4==0)and(int(month1)==2):
@@ -97,7 +103,8 @@ if(int(year1)%4==0)and(int(month1)==11):
  y=31+30+31+31+30+31+30+31+29+31
 if(int(year1)%4==0)and(int(month1)==12):
  y=30+31+30+31+31+30+31+30+31+29+31
- 
+
+#for the leap years
 if(int(year1)%4!=0)and(int(month1)==1):
  y=0
 if(int(year1)%4!=0)and(int(month1)==2):
@@ -123,7 +130,7 @@ if(int(year1)%4!=0)and(int(month1)==11):
 if(int(year1)%4!=0)and(int(month1)==12):
  y=30+31+30+31+31+30+31+30+31+28+31
 
-
+#detailed calculation
 x=int(z)+int(day)
 left_of_year_1=365-int(x)
 left_of_year_2=366-int(x)
@@ -131,7 +138,7 @@ left_of_year_2=366-int(x)
 m=int(y)+int(day1)
 passed_of_year1=int(y)
 
-
+#calculating the age result of genome content
 if(int(year)%4==0):
     d=((left_of_year_2)+(passed_of_year1)+(Distance1))
     print('The age of genome content is',(int(left_of_year_2)+int(passed_of_year1)+int(Distance1)),'DAYS OLD!',(24*(int(left_of_year_2)+int(passed_of_year1)+int(Distance1))),'HOURS OLD!',(60*24*(int(left_of_year_2)+int(passed_of_year1)+int(Distance1))),'MINUTES OLD!')
@@ -145,6 +152,6 @@ if(int(year)%4!=0)and((int(year)%4)==3):
     d=((left_of_year_1)+(passed_of_year1)+(Distance4))
     print('The age of genome content is',(int(left_of_year_1)+int(passed_of_year1)+int(Distance4)),'DAYS OLD!',(24*(int(left_of_year_1)+int(passed_of_year1)+int(Distance4))),'HOURS OLD!',(60*24*(int(left_of_year_1)+int(passed_of_year1)+int(Distance4))),'MINUTES OLD!')
 
-
+#calculating the remaining amount based of given half life and passed time
 remaind= (int (Content_amount)/int (2**(int (d)/int (half_life))))
 print('There is', remaind, 'gram remaining.')
